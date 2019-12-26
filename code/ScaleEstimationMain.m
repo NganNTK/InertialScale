@@ -13,10 +13,11 @@ close all
 addpath quaternions
 
 % Run the scale estimation using the following dataset
-dataset = 'D5';
+dataset = 'tsim01';
 
 % Read camera poses and timestamps
 [posVis,qtVis,tVis,scaleGT] = readVisual(dataset);
+checkVisualInput(posVis, qtVis, tVis);
 
 % Read inertial measurements and timestamps
 [accImu,angImu,tImu] = readInertial(dataset);
@@ -49,6 +50,7 @@ else
 end
 fprintf('gravity = [%.4f, %.4f, %.4f]\n', gravity);
 fprintf('bias = [%.4f, %.4f, %.4f]\n',bias);
+fprintf('bias magnitude=%f\n', sqrt(sum(bias.^2)));
 fprintf('td = %.4f seconds\n',td);
 fprintf('Rs = [%.2f %.2f %.2f; %.2f %.2f %.2f; %.2f %.2f %.2f]\n', Rs');
 fprintf('\n');

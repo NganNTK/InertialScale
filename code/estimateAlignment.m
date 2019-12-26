@@ -37,12 +37,32 @@ angVis = -(2/dt)*qt_mul(qtDiffs, qt_inv(qtVis'));
 angVis = angVis(2:4,:)';
 
 % Smooth angular velocities
+% ----original code----
+% angVis(:,1) = smooth(angVis(:,1),15);
+% angVis(:,2) = smooth(angVis(:,2),15);
+% angVis(:,3) = smooth(angVis(:,3),15);
+% angImu(:,1) = smooth(angImu(:,1),15);
+% angImu(:,2) = smooth(angImu(:,2),15);
+% angImu(:,3) = smooth(angImu(:,3),15);
+% ----original code----
+
+% SPAN = 300 when smooth angImu, SPAN = 15 when smooth angVis for /tsim01 dataset
 angVis(:,1) = smooth(angVis(:,1),15);
 angVis(:,2) = smooth(angVis(:,2),15);
 angVis(:,3) = smooth(angVis(:,3),15);
-angImu(:,1) = smooth(angImu(:,1),15);
-angImu(:,2) = smooth(angImu(:,2),15);
-angImu(:,3) = smooth(angImu(:,3),15);
+angImu(:,1) = smooth(angImu(:,1),300);
+angImu(:,2) = smooth(angImu(:,2),300);
+angImu(:,3) = smooth(angImu(:,3),300);
+
+figure;
+plot([angImu(:, 1), angVis(:, 1)]), title('angImuVis_1'), ylim([-0.2 0.2]);
+legend('angImu', 'angVis');
+figure;
+plot([angImu(:, 2), angVis(:, 2)]), title('angImuVis_2'), ylim([-0.2 0.2]);
+legend('angImu', 'angVis');
+figure;
+plot([angImu(:, 3), angVis(:, 3)]), title('angImuVis_3'), ylim([-0.2 0.2]);
+legend('angImu', 'angVis');
 
 gRatio = (1 + sqrt(5)) / 2;
 tolerance = 0.0001;
